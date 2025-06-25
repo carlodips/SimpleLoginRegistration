@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -40,6 +41,7 @@ android {
 }
 
 dependencies {
+    val roomVersion = "2.7.2"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -58,5 +60,18 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // Compose
-    implementation("androidx.navigation:navigation-compose:2.9.0")
+    implementation(libs.androidx.navigation.compose)
+
+    // Room Database
+    implementation(libs.androidx.room.runtime)
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation(libs.androidx.room.ktx)
+    testImplementation(libs.androidx.room.testing)
+
+    // Local Unit Tests
+    testImplementation(libs.truth)
+
+    // Instrumented Unit Tests
+    androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.truth)
 }
