@@ -2,4 +2,6 @@
     <string name="app_name">SimpleLoginRegistration</string>
     <string name="label_username_email">Username/Email</string>
     <string name="label_password">Password</string>
+    <string name="button_login">Login</string>
+    <string name="button_sign_up">Don\'t have an account? Sign up</string>
 </resources>

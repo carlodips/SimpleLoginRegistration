@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -19,10 +19,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.carlodips.simpleloginregistration.R
-import com.carlodips.simpleloginregistration.ui.home.HomeScreenContent
 import com.carlodips.simpleloginregistration.ui.theme.SimpleLoginRegistrationTheme
 
 @Composable
@@ -49,7 +48,11 @@ fun LoginScreenContent(modifier: Modifier = Modifier) {
     ) {
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x2)))
 
-        Text(text = stringResource(R.string.app_name))
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(R.string.app_name),
+            textAlign = TextAlign.Center
+        )
 
         OutlinedTextField(
             modifier = Modifier
@@ -71,6 +74,25 @@ fun LoginScreenContent(modifier: Modifier = Modifier) {
             label = {
                 Text(stringResource(R.string.label_password))
             }
+        )
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x2)))
+
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { }) {
+            Text(
+                modifier = Modifier.padding(dimensionResource(R.dimen.element_spacing)),
+                text = stringResource(R.string.button_login)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_half)))
+
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(R.string.button_sign_up),
+            textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x3)))
