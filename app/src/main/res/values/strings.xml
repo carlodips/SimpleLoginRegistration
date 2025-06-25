@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SimpleLoginRegistration</string>
+    <string name="label_username_email">Username/Email</string>
+    <string name="label_password">Password</string>
+</resources>

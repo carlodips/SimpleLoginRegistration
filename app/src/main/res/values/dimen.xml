@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="element_spacing_half">4dp</dimen>
+    <dimen name="element_spacing">8dp</dimen>
+    <dimen name="element_spacing_x1_5">12dp</dimen>
+    <dimen name="element_spacing_x2">16dp</dimen>
+    <dimen name="element_spacing_x2_5">20dp</dimen>
+    <dimen name="element_spacing_x3">24dp</dimen>
+    <dimen name="element_spacing_x4">32dp</dimen>
+    <dimen name="element_spacing_x5">40dp</dimen>
+    <dimen name="element_spacing_x6">48dp</dimen>
+</resources>
