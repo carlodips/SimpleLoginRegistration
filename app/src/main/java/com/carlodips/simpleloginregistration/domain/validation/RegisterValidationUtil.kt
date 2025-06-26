@@ -1,6 +1,6 @@
 package com.carlodips.simpleloginregistration.domain.validation
 
-object ValidationUtil {
+object RegisterValidationUtil {
     fun validateUsernameInput(input: String): ValidationResult {
         if (input.isBlank()) {
             return ValidationResult(

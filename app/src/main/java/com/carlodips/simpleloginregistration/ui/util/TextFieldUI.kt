@@ -28,9 +28,10 @@ fun TextFieldWithErrorMessage(
     errorMessage: String? = null,
     singleLine: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions(
-        capitalization = KeyboardCapitalization.Sentences,
+        capitalization = KeyboardCapitalization.None,
         keyboardType = KeyboardType.Text,
-        imeAction = ImeAction.Next
+        imeAction = ImeAction.Next,
+        autoCorrectEnabled = false
     ),
     onValueChange: (String) -> Unit = {},
 ) {
@@ -63,8 +64,8 @@ fun PasswordTextField(
     errorMessage: String? = null,
     singleLine: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions(
-        capitalization = KeyboardCapitalization.Sentences,
-        keyboardType = KeyboardType.Text,
+        capitalization = KeyboardCapitalization.None,
+        keyboardType = KeyboardType.Password,
         imeAction = ImeAction.Next
     ),
     onValueChange: (String) -> Unit = {},

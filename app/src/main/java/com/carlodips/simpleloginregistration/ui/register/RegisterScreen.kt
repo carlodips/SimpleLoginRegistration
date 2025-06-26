@@ -26,10 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -91,19 +91,6 @@ fun RegisterScreenContent(
     onInputValueChanged: (Int, String) -> Unit,
     onSubmitButtonClicked: () -> Unit
 ) {
-    /*val isSubmitButtonEnabled by remember {
-        derivedStateOf {
-            uiState.value.let {
-                it.usernameError?.isValid == true && it.emailError?.isValid == true &&
-                        it.passwordError?.isValid == true &&
-                        ValidationUtil.doPasswordsMatch(
-                            password1 = uiState.value.password,
-                            password2 = uiState.value.confirmPassword
-                        ).isValid
-            }
-        }
-    }*/
-
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -115,9 +102,12 @@ fun RegisterScreenContent(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.label_register),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.primary
         )
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_half)))
 
         TextFieldWithErrorMessage(
             modifier = Modifier
@@ -127,8 +117,7 @@ fun RegisterScreenContent(
                 onInputValueChanged.invoke(R.string.label_username, it)
             },
             errorMessage = uiState.value.usernameError,
-            label = stringResource(R.string.label_username),
-            singleLine = true
+            label = stringResource(R.string.label_username)
         )
 
         TextFieldWithErrorMessage(
@@ -140,6 +129,12 @@ fun RegisterScreenContent(
             },
             errorMessage = uiState.value.emailError,
             label = stringResource(R.string.label_email),
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.None,
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next,
+                autoCorrectEnabled = false
+            )
         )
 
         PasswordTextField(
@@ -149,11 +144,6 @@ fun RegisterScreenContent(
             onValueChange = {
                 onInputValueChanged.invoke(R.string.label_password, it)
             },
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.None,
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Next
-            ),
             errorMessage = uiState.value.passwordError,
             label = stringResource(R.string.label_password),
         )

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.carlodips.simpleloginregistration.R
 import com.carlodips.simpleloginregistration.domain.model.UserBean
 import com.carlodips.simpleloginregistration.domain.repository.UserRepository
-import com.carlodips.simpleloginregistration.domain.validation.ValidationUtil
+import com.carlodips.simpleloginregistration.domain.validation.RegisterValidationUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -63,7 +63,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun validateUsername(): Boolean {
-        val validationResult = ValidationUtil.validateUsernameInput(uiState.value.username)
+        val validationResult = RegisterValidationUtil.validateUsernameInput(uiState.value.username)
 
         _uiState.update {
             it.copy(usernameError = validationResult.errorMessage)
@@ -73,7 +73,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun validateEmail(): Boolean {
-        val validationResult = ValidationUtil.validateEmailInput(uiState.value.email)
+        val validationResult = RegisterValidationUtil.validateEmailInput(uiState.value.email)
 
         _uiState.update {
             it.copy(emailError = validationResult.errorMessage)
@@ -83,7 +83,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun validatePassword(): Boolean {
-        val validationResult = ValidationUtil.validatePassword(uiState.value.password)
+        val validationResult = RegisterValidationUtil.validatePassword(uiState.value.password)
 
         _uiState.update {
             it.copy(passwordError = validationResult.errorMessage)
@@ -93,7 +93,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun validateConfirmPassword(): Boolean {
-        val validationResult = ValidationUtil.doPasswordsMatch(
+        val validationResult = RegisterValidationUtil.doPasswordsMatch(
             password1 = uiState.value.password,
             password2 = uiState.value.confirmPassword
         )

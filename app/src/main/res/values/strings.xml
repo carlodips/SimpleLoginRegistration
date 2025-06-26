@@ -2,10 +2,10 @@
     <string name="app_name">SimpleLoginRegistration</string>
 
     <!-- Login -->
-    <string name="label_username_email">Username/Email</string>
+    <string name="label_username_email">Username or Email</string>
     <string name="label_password">Password</string>
     <string name="label_login">Login</string>
-    <string name="button_login">@string/label_login</string>
+    <string name="button_login">Continue</string>
     <string name="button_sign_up">Don\'t have an account? Sign up</string>
 
     <!-- Register -->
@@ -15,4 +15,5 @@
     <string name="label_register">Register</string>
     <string name="button_submit">Submit</string>
     <string name="msg_register_success">Register successful! You may now login using your credentials.</string>
+    <string name="msg_login_failed">Incorrect login details. Please try again.</string>
 </resources>

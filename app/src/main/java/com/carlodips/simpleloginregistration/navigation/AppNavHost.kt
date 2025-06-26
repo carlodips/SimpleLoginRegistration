@@ -22,13 +22,12 @@ fun AppNavHost(
     ) {
         composable(route = ScreenRoute.Home.route) {
             Text("You are now logged in")
-
         }
 
         composable(route = ScreenRoute.Login.route) {
             LoginScreen(
-                onSignUpButtonClicked = {
-                    navController.navigate(ScreenRoute.Register.route)
+                navigateTo = { screenRoute ->
+                    navController.navigate(screenRoute.route)
                 }
             )
         }
