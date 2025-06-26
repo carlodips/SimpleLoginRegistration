@@ -39,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlodips.simpleloginregistration.R
+import com.carlodips.simpleloginregistration.domain.validation.RegexPatternUtil
 import com.carlodips.simpleloginregistration.navigation.ScreenRoute
 import com.carlodips.simpleloginregistration.ui.theme.SimpleLoginRegistrationTheme
 import com.carlodips.simpleloginregistration.ui.util.PasswordTextField
@@ -148,6 +149,7 @@ fun LoginScreenContent(
                 .fillMaxWidth(),
             textValue = uiState.value.userId,
             onValueChange = {
+                if (it.length > 40) return@TextFieldWithErrorMessage
                 onUiEvent.invoke(LoginInputEvent.EnteredUserId(it))
             },
             label = stringResource(R.string.label_username_email)
@@ -158,6 +160,7 @@ fun LoginScreenContent(
                 .fillMaxWidth(),
             textValue = uiState.value.password,
             onValueChange = {
+                if (it.length > 32) return@PasswordTextField
                 onUiEvent.invoke(LoginInputEvent.EnteredPassword(it))
             },
             keyboardOptions = KeyboardOptions(

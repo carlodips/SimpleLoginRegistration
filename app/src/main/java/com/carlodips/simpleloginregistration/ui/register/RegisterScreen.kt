@@ -114,6 +114,7 @@ fun RegisterScreenContent(
                 .fillMaxWidth(),
             textValue = uiState.value.username,
             onValueChange = {
+                if (it.length > 40) return@TextFieldWithErrorMessage
                 onInputValueChanged.invoke(R.string.label_username, it)
             },
             errorMessage = uiState.value.usernameError,
@@ -125,6 +126,7 @@ fun RegisterScreenContent(
                 .fillMaxWidth(),
             textValue = uiState.value.email,
             onValueChange = {
+                if (it.length > 40) return@TextFieldWithErrorMessage
                 onInputValueChanged.invoke(R.string.label_email, it)
             },
             errorMessage = uiState.value.emailError,
@@ -142,6 +144,7 @@ fun RegisterScreenContent(
                 .fillMaxWidth(),
             textValue = uiState.value.password,
             onValueChange = {
+                if (it.length > 32) return@PasswordTextField
                 onInputValueChanged.invoke(R.string.label_password, it)
             },
             errorMessage = uiState.value.passwordError,
@@ -153,6 +156,7 @@ fun RegisterScreenContent(
                 .fillMaxWidth(),
             textValue = uiState.value.confirmPassword,
             onValueChange = {
+                if (it.length > 32) return@PasswordTextField
                 onInputValueChanged.invoke(R.string.label_confirm_password, it)
             },
             keyboardOptions = KeyboardOptions(

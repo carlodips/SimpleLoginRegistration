@@ -16,6 +16,15 @@ object RegisterValidationUtil {
             )
         }
 
+        val lettersNumbersPattern = Regex(RegexPatternUtil.LETTERS_NUMBERS_ONLY)
+
+        if (!input.matches(lettersNumbersPattern)) {
+            return ValidationResult(
+                isValid = false,
+                errorMessage = "Invalid Character"
+            )
+        }
+
         return ValidationResult(isValid = true)
     }
 
@@ -27,8 +36,7 @@ object RegisterValidationUtil {
             )
         }
 
-        val emailPattern =
-            Regex("^[_A-Za-z0-9\\-]+(\\.[_A-Za-z0-9\\-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+        val emailPattern = Regex(RegexPatternUtil.EMAIL)
 
         if (!input.matches(emailPattern)) {
             return ValidationResult(
@@ -55,9 +63,9 @@ object RegisterValidationUtil {
             )
         }
 
-        val isDigitsAndLetters = input.any { it.isLetter() } && input.any { it.isDigit() }
+        val hasDigitsAndLetters = input.any { it.isLetter() } && input.any { it.isDigit() }
 
-        if (!isDigitsAndLetters) {
+        if (!hasDigitsAndLetters) {
             return ValidationResult(
                 isValid = false,
                 errorMessage = "Password should contain at least one character and one digit"

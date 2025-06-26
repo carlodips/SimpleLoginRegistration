@@ -19,6 +19,13 @@ class RegisterValidationUtilTest {
     }
 
     @Test
+    fun `invalid username pattern returns false`() {
+        val result = RegisterValidationUtil.validateUsernameInput(" a@dmc.cm#sk  ks").isValid
+
+        assertThat(result).isFalse()
+    }
+
+    @Test
     fun `valid username returns true`() {
         val result = RegisterValidationUtil.validateUsernameInput("abcd").isValid
 
