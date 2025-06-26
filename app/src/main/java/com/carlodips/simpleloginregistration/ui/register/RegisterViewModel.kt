@@ -9,8 +9,10 @@ import com.carlodips.simpleloginregistration.domain.validation.RegisterValidatio
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,6 +28,9 @@ class RegisterViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(RegisterUIState())
     val uiState: StateFlow<RegisterUIState>
         get() = _uiState.asStateFlow()
+
+    private val _resultEventFlow = MutableSharedFlow<RegistrationResultEvent>()
+    val resultEventFlow = _resultEventFlow.asSharedFlow()
 
     fun onInputValueChanged(id: Int, input: String) {
         when (id) {
@@ -122,18 +127,36 @@ class RegisterViewModel @Inject constructor(
 
         job = viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                repository.insertUser(
+                var isEmailOrUsernameTaken = false
+
+                if (repository.checkIfEmailIsTaken(uiState.value.email)) {
+                    _uiState.update {
+                        it.copy(emailError = "Email is already taken")
+                    }
+                    isEmailOrUsernameTaken = true
+                }
+                if (repository.checkIfUsernameIsTaken(uiState.value.username)) {
+                    _uiState.update {
+                        it.copy(usernameError = "Username is already taken")
+                    }
+                    isEmailOrUsernameTaken = true
+                }
+
+                // If email or username is already taken, cancel inserting of user
+                if (isEmailOrUsernameTaken) return@withContext
+
+                val id = repository.insertUser(
                     user = UserBean(
                         username = uiState.value.username,
                         email = uiState.value.email,
                         password = uiState.value.password
                     )
                 )
-            }
 
-            withContext(Dispatchers.Main) {
-                _uiState.update {
-                    it.copy(isRegistrationSuccessful = true)
+                if (id >= 0) {
+                    _resultEventFlow.emit(RegistrationResultEvent.RegistrationSuccess)
+                } else {
+                    _resultEventFlow.emit(RegistrationResultEvent.RegistrationFailed)
                 }
             }
         }

@@ -1,8 +1,10 @@
 package com.carlodips.simpleloginregistration.ui.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
@@ -15,6 +17,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -54,12 +57,16 @@ fun HomeScreenContent(
             .verticalScroll(rememberScrollState())
             .windowInsetsPadding(insets = WindowInsets.safeDrawing),
     ) {
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x3)))
+
         Text(
             text = stringResource(
                 R.string.msg_hello_user,
                 uiState.value.loggedInUser?.username ?: ""
             )
         )
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x3)))
     }
 }
 

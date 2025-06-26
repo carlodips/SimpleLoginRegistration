@@ -83,6 +83,8 @@ class LoginViewModel @Inject constructor(
 
             withContext(Dispatchers.Main) {
                 if (user != null) {
+                    // Clear fields upon login success
+                    _uiState.value = LoginUIState()
                     _resultEventFlow.emit(LoginResultEvent.LoginSuccess)
                 } else {
                     _resultEventFlow.emit(LoginResultEvent.LoginFailed)

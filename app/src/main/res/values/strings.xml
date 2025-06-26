@@ -14,7 +14,10 @@
     <string name="label_confirm_password">Confirm Password</string>
     <string name="label_register">Register</string>
     <string name="button_submit">Submit</string>
-    <string name="msg_register_success">Register successful! You may now login using your credentials.</string>
+    <string name="msg_register_success">You may now login using your credentials.</string>
     <string name="msg_login_failed">Incorrect login details. Please try again.</string>
+    <string name="msg_failed">Something went wrong. Please try again.</string>
+
+    <!-- Home  -->
     <string name="msg_hello_user">Hello, %1$s</string>
 </resources>

@@ -34,9 +34,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlodips.simpleloginregistration.R
+import com.carlodips.simpleloginregistration.navigation.ScreenRoute
+import com.carlodips.simpleloginregistration.ui.login.LoginResultEvent
 import com.carlodips.simpleloginregistration.ui.theme.SimpleLoginRegistrationTheme
 import com.carlodips.simpleloginregistration.ui.util.PasswordTextField
 import com.carlodips.simpleloginregistration.ui.util.TextFieldWithErrorMessage
+import kotlinx.coroutines.flow.collectLatest
 
 data class RegisterUIState(
     val username: String = "",
@@ -50,6 +53,11 @@ data class RegisterUIState(
     val isRegistrationSuccessful: Boolean = false
 )
 
+sealed class RegistrationResultEvent {
+    data object RegistrationSuccess : RegistrationResultEvent()
+    data object RegistrationFailed : RegistrationResultEvent()
+}
+
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
@@ -60,13 +68,26 @@ fun RegisterScreen(
 
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
-    if (uiState.value.isRegistrationSuccessful) {
-        LaunchedEffect(key1 = uiState.value.isRegistrationSuccessful) {
-            Toast.makeText(
-                context,
-                context.getString(R.string.msg_register_success), Toast.LENGTH_LONG
-            ).show()
-            onPopBackToLogin.invoke()
+    // Handles result shared flow
+    LaunchedEffect(Unit) {
+        viewModel.resultEventFlow.collectLatest { event ->
+            when (event) {
+                is RegistrationResultEvent.RegistrationSuccess -> {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.msg_register_success), Toast.LENGTH_LONG
+                    ).show()
+                    onPopBackToLogin.invoke()
+                }
+
+                is RegistrationResultEvent.RegistrationFailed -> {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.msg_failed),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
     }
 

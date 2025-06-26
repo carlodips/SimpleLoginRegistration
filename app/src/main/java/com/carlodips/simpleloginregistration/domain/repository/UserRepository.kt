@@ -10,6 +10,10 @@ interface UserRepository {
 
     suspend fun getUser(userInput: String, password: String): UserEntity?
 
+    suspend fun checkIfUsernameIsTaken(username: String): Boolean
+
+    suspend fun checkIfEmailIsTaken(email: String): Boolean
+
     fun setLoggedInUser(userEntity: UserEntity) {
         loggedInUser = userEntity.toDomain()
     }

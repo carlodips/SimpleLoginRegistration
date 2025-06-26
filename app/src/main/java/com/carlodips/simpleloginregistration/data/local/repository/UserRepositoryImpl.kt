@@ -23,4 +23,12 @@ class UserRepositoryImpl(
 
         return user
     }
+
+    override suspend fun checkIfUsernameIsTaken(username: String): Boolean {
+        return dao.checkIfUsernameIsTaken(username)
+    }
+
+    override suspend fun checkIfEmailIsTaken(email: String): Boolean {
+        return dao.checkIfEmailIsTaken(email)
+    }
 }
