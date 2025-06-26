@@ -1,11 +1,15 @@
 package com.carlodips.simpleloginregistration.ui.login
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -25,17 +29,27 @@ import com.carlodips.simpleloginregistration.R
 import com.carlodips.simpleloginregistration.ui.theme.SimpleLoginRegistrationTheme
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(
+    modifier: Modifier = Modifier,
+    onSignUpButtonClicked: () -> Unit
+) {
     Surface(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .windowInsetsPadding(insets = WindowInsets.safeDrawing),
         color = MaterialTheme.colorScheme.background
     ) {
-        LoginScreenContent()
+        LoginScreenContent(
+            onSignUpButtonClicked = onSignUpButtonClicked
+        )
     }
 }
 
 @Composable
-fun LoginScreenContent(modifier: Modifier = Modifier) {
+fun LoginScreenContent(
+    modifier: Modifier = Modifier,
+    onSignUpButtonClicked: () -> Unit
+) {
     val temp = remember {
         mutableStateOf("")
     }
@@ -90,7 +104,11 @@ fun LoginScreenContent(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_half)))
 
         Text(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    onSignUpButtonClicked.invoke()
+                },
             text = stringResource(R.string.button_sign_up),
             textAlign = TextAlign.Center
         )
@@ -107,7 +125,9 @@ fun PreviewLoginScreen() {
         color = MaterialTheme.colorScheme.background
     ) {
         SimpleLoginRegistrationTheme {
-            LoginScreenContent()
+            LoginScreenContent(
+                onSignUpButtonClicked = {}
+            )
         }
     }
 }

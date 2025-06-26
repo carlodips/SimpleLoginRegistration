@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.carlodips.simpleloginregistration.ui.login.LoginScreen
+import com.carlodips.simpleloginregistration.ui.register.RegisterScreen
 
 @Composable
 fun AppNavHost(
@@ -19,17 +20,25 @@ fun AppNavHost(
         navController = navController,
         startDestination = ScreenRoute.Login.route
     ) {
-        composable(ScreenRoute.Home.route) {
+        composable(route = ScreenRoute.Home.route) {
             Text("You are now logged in")
 
         }
 
-        composable(ScreenRoute.Login.route) {
-            LoginScreen()
+        composable(route = ScreenRoute.Login.route) {
+            LoginScreen(
+                onSignUpButtonClicked = {
+                    navController.navigate(ScreenRoute.Register.route)
+                }
+            )
         }
 
-        composable(ScreenRoute.Register.route) {
-
+        composable(route = ScreenRoute.Register.route) {
+            RegisterScreen(
+                onPopBackToLogin = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
