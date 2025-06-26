@@ -20,8 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -36,8 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlodips.simpleloginregistration.R
-import com.carlodips.simpleloginregistration.domain.validation.ValidationUtil
 import com.carlodips.simpleloginregistration.ui.theme.SimpleLoginRegistrationTheme
+import com.carlodips.simpleloginregistration.ui.util.PasswordTextField
 import com.carlodips.simpleloginregistration.ui.util.TextFieldWithErrorMessage
 
 data class RegisterUIState(
@@ -133,8 +131,6 @@ fun RegisterScreenContent(
             singleLine = true
         )
 
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing)))
-
         TextFieldWithErrorMessage(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -146,9 +142,7 @@ fun RegisterScreenContent(
             label = stringResource(R.string.label_email),
         )
 
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing)))
-
-        TextFieldWithErrorMessage(
+        PasswordTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             textValue = uiState.value.password,
@@ -164,9 +158,7 @@ fun RegisterScreenContent(
             label = stringResource(R.string.label_password),
         )
 
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing)))
-
-        TextFieldWithErrorMessage(
+        PasswordTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             textValue = uiState.value.confirmPassword,
