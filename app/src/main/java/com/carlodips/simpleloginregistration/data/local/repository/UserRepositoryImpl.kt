@@ -7,12 +7,20 @@ import com.carlodips.simpleloginregistration.domain.repository.UserRepository
 
 class UserRepositoryImpl(
     private val dao: UserDao
-): UserRepository {
+) : UserRepository {
+    override var loggedInUser: UserBean? = null
+
     override suspend fun insertUser(user: UserBean): Long {
         return dao.insertUser(UserEntity.toEntity(user))
     }
 
     override suspend fun getUser(userInput: String, password: String): UserEntity? {
-        return dao.getUser(userInput = userInput, password = password)
+        val user = dao.getUser(userInput = userInput, password = password)
+
+        if (user != null) {
+            setLoggedInUser(user)
+        }
+
+        return user
     }
 }

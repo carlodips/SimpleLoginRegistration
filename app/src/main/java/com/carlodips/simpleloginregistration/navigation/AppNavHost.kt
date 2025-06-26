@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.carlodips.simpleloginregistration.ui.home.HomeScreen
 import com.carlodips.simpleloginregistration.ui.login.LoginScreen
 import com.carlodips.simpleloginregistration.ui.register.RegisterScreen
 
@@ -21,7 +22,7 @@ fun AppNavHost(
         startDestination = ScreenRoute.Login.route
     ) {
         composable(route = ScreenRoute.Home.route) {
-            Text("You are now logged in")
+            HomeScreen()
         }
 
         composable(route = ScreenRoute.Login.route) {

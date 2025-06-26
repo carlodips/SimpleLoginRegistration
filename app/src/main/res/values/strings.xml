@@ -16,4 +16,5 @@
     <string name="button_submit">Submit</string>
     <string name="msg_register_success">Register successful! You may now login using your credentials.</string>
     <string name="msg_login_failed">Incorrect login details. Please try again.</string>
+    <string name="msg_hello_user">Hello, %1$s</string>
 </resources>
