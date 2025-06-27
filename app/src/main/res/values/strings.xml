@@ -20,4 +20,12 @@
 
     <!-- Home  -->
     <string name="msg_hello_user">Hello, %1$s</string>
+    <string name="label_home">Home</string>
+    <string name="button_logout">Logout</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="button_dismiss">Dismiss</string>
+    <string name="title_logout">Logout?</string>
+    <string name="button_yes">Yes</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="msg_logout">Are you sure you want to log out?</string>
 </resources>

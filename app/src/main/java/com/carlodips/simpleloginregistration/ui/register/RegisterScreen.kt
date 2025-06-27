@@ -13,16 +13,26 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -30,12 +40,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlodips.simpleloginregistration.R
-import com.carlodips.simpleloginregistration.navigation.ScreenRoute
-import com.carlodips.simpleloginregistration.ui.login.LoginResultEvent
 import com.carlodips.simpleloginregistration.ui.theme.SimpleLoginRegistrationTheme
 import com.carlodips.simpleloginregistration.ui.util.PasswordTextField
 import com.carlodips.simpleloginregistration.ui.util.TextFieldWithErrorMessage
@@ -58,6 +67,7 @@ sealed class RegistrationResultEvent {
     data object RegistrationFailed : RegistrationResultEvent()
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
@@ -67,6 +77,8 @@ fun RegisterScreen(
     val context = LocalContext.current
 
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
     // Handles result shared flow
     LaunchedEffect(Unit) {
@@ -97,11 +109,42 @@ fun RegisterScreen(
             .windowInsetsPadding(insets = WindowInsets.safeDrawing),
         color = MaterialTheme.colorScheme.background
     ) {
-        RegisterScreenContent(
-            uiState = uiState,
-            onInputValueChanged = viewModel::onInputValueChanged,
-            onSubmitButtonClicked = viewModel::onSubmitButtonClicked
-        )
+        Scaffold(
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            topBar = {
+                CenterAlignedTopAppBar(
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.primary,
+                    ),
+                    title = {
+                        Text(
+                            text = stringResource(R.string.label_register),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            onPopBackToLogin.invoke()
+                        }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Navigate back"
+                            )
+                        }
+                    },
+                    scrollBehavior = scrollBehavior,
+                )
+            },
+        ) { innerPadding ->
+            RegisterScreenContent(
+                modifier = Modifier.padding(innerPadding),
+                uiState = uiState,
+                onInputValueChanged = viewModel::onInputValueChanged,
+                onSubmitButtonClicked = viewModel::onSubmitButtonClicked
+            )
+        }
     }
 }
 

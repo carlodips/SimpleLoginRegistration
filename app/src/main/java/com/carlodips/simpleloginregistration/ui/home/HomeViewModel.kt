@@ -17,5 +17,8 @@ class HomeViewModel @Inject constructor(
         get() = _uiState.asStateFlow()
 
 
+    fun logoutUser() {
+        repository.clearLoggedInUser()
+    }
 
 }

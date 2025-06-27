@@ -22,13 +22,29 @@ fun AppNavHost(
         startDestination = ScreenRoute.Login.route
     ) {
         composable(route = ScreenRoute.Home.route) {
-            HomeScreen()
+            HomeScreen(
+                onLogoutUser = {
+                    navController.navigate(ScreenRoute.Login.route) {
+                        popUpTo(ScreenRoute.Home.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
 
         composable(route = ScreenRoute.Login.route) {
             LoginScreen(
                 navigateTo = { screenRoute ->
-                    navController.navigate(screenRoute.route)
+                    navController.navigate(screenRoute.route) {
+                        if (screenRoute.route == ScreenRoute.Home.route) {
+                            navController.navigate(ScreenRoute.Login.route) {
+                                popUpTo(ScreenRoute.Login.route) {
+                                    inclusive = true
+                                }
+                            }
+                        }
+                    }
                 }
             )
         }
