@@ -9,4 +9,6 @@
     <dimen name="element_spacing_x4">32dp</dimen>
     <dimen name="element_spacing_x5">40dp</dimen>
     <dimen name="element_spacing_x6">48dp</dimen>
+
+    <dimen name="card_corner_rounded">20dp</dimen>
 </resources>

@@ -1,6 +1,5 @@
 package com.carlodips.simpleloginregistration.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -39,7 +38,7 @@ fun AppNavHost(
                     navController.navigate(screenRoute.route) {
                         if (screenRoute.route == ScreenRoute.Home.route) {
                             navController.navigate(ScreenRoute.Login.route) {
-                                popUpTo(ScreenRoute.Login.route) {
+                                popUpTo(navController.graph.id) {
                                     inclusive = true
                                 }
                             }

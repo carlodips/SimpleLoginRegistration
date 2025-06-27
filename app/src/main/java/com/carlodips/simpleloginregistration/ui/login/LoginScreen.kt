@@ -1,6 +1,7 @@
 package com.carlodips.simpleloginregistration.ui.login
 
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -23,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
@@ -36,8 +39,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlodips.simpleloginregistration.R
+import com.carlodips.simpleloginregistration.getActivity
 import com.carlodips.simpleloginregistration.navigation.ScreenRoute
 import com.carlodips.simpleloginregistration.ui.theme.SimpleLoginRegistrationTheme
+import com.carlodips.simpleloginregistration.ui.util.CardUI
 import com.carlodips.simpleloginregistration.ui.util.PasswordTextField
 import com.carlodips.simpleloginregistration.ui.util.TextFieldWithErrorMessage
 import kotlinx.coroutines.flow.collectLatest
@@ -69,6 +74,10 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
     val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
+    BackHandler {
+        context.getActivity()?.finish()
+    }
 
     // Handles result shared flow
     LaunchedEffect(Unit) {
@@ -114,26 +123,54 @@ fun LoginScreenContent(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = dimensionResource(R.dimen.element_spacing_x2))
             .verticalScroll(rememberScrollState()),
     ) {
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x3)))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x4)))
 
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.app_name),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x4)))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x3)))
+
+        CardUI(
+            modifier = Modifier
+                .padding(
+                    horizontal = dimensionResource(R.dimen.element_spacing_x2)
+                )
+        ) {
+            LoginScreenForm(
+                uiState = uiState,
+                onUiEvent = onUiEvent
+            )
+        }
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x3)))
+    }
+}
+
+@Composable
+fun LoginScreenForm(
+    modifier: Modifier = Modifier,
+    uiState: State<LoginUIState>,
+    onUiEvent: (event: LoginInputEvent) -> Unit
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = dimensionResource(R.dimen.element_spacing_x2))
+    ) {
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x2)))
 
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.label_login),
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.primary
         )
@@ -150,6 +187,8 @@ fun LoginScreenContent(
             },
             label = stringResource(R.string.label_username_email)
         )
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_half)))
 
         PasswordTextField(
             modifier = Modifier
@@ -182,16 +221,15 @@ fun LoginScreenContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_half)))
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing)))
 
         Text(
             modifier = Modifier
-                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
                 .clickable {
                     onUiEvent.invoke(LoginInputEvent.SignUpClicked)
                 },
-            text = stringResource(R.string.button_sign_up),
-            textAlign = TextAlign.Center
+            text = stringResource(R.string.button_sign_up)
         )
 
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x3)))
@@ -208,7 +246,7 @@ fun PreviewLoginScreen() {
         color = MaterialTheme.colorScheme.background
     ) {
         SimpleLoginRegistrationTheme {
-            LoginScreenContent(
+            LoginScreenForm(
                 uiState = uiState,
                 onUiEvent = {}
             )

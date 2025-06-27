@@ -13,6 +13,7 @@
     <string name="label_email">Email</string>
     <string name="label_confirm_password">Confirm Password</string>
     <string name="label_register">Register</string>
+    <string name="msg_register">Create a new account</string>
     <string name="button_submit">Submit</string>
     <string name="msg_register_success">You may now login using your credentials.</string>
     <string name="msg_login_failed">Incorrect login details. Please try again.</string>

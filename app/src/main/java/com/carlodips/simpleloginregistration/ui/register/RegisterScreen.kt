@@ -3,13 +3,10 @@ package com.carlodips.simpleloginregistration.ui.register
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -46,6 +43,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlodips.simpleloginregistration.R
 import com.carlodips.simpleloginregistration.ui.theme.SimpleLoginRegistrationTheme
+import com.carlodips.simpleloginregistration.ui.util.CardUI
 import com.carlodips.simpleloginregistration.ui.util.PasswordTextField
 import com.carlodips.simpleloginregistration.ui.util.TextFieldWithErrorMessage
 import kotlinx.coroutines.flow.collectLatest
@@ -105,8 +103,7 @@ fun RegisterScreen(
 
     Surface(
         modifier = modifier
-            .fillMaxSize()
-            .windowInsetsPadding(insets = WindowInsets.safeDrawing),
+            .fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         Scaffold(
@@ -157,16 +154,42 @@ fun RegisterScreenContent(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = dimensionResource(R.dimen.element_spacing_x2))
             .verticalScroll(rememberScrollState()),
+    ) {
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x3)))
+
+        CardUI(
+            modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.element_spacing_x2))
+        ) {
+            RegisterScreenForm(
+                uiState = uiState,
+                onInputValueChanged = onInputValueChanged,
+                onSubmitButtonClicked = onSubmitButtonClicked
+            )
+        }
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x3)))
+    }
+}
+
+@Composable
+fun RegisterScreenForm(
+    modifier: Modifier = Modifier,
+    uiState: State<RegisterUIState>,
+    onInputValueChanged: (Int, String) -> Unit,
+    onSubmitButtonClicked: () -> Unit
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = dimensionResource(R.dimen.element_spacing_x2))
     ) {
         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_x2)))
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(R.string.label_register),
-            style = MaterialTheme.typography.titleLarge,
+            text = stringResource(R.string.msg_register),
+            style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.primary
         )
@@ -184,6 +207,8 @@ fun RegisterScreenContent(
             errorMessage = uiState.value.usernameError,
             label = stringResource(R.string.label_username)
         )
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_half)))
 
         TextFieldWithErrorMessage(
             modifier = Modifier
@@ -203,6 +228,8 @@ fun RegisterScreenContent(
             )
         )
 
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_half)))
+
         PasswordTextField(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -214,6 +241,8 @@ fun RegisterScreenContent(
             errorMessage = uiState.value.passwordError,
             label = stringResource(R.string.label_password),
         )
+
+        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.element_spacing_half)))
 
         PasswordTextField(
             modifier = Modifier

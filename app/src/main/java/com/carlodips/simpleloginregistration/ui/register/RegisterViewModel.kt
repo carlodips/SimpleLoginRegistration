@@ -53,7 +53,7 @@ class RegisterViewModel @Inject constructor(
                     it.copy(password = input)
                 }
                 validatePassword()
-                if (uiState.value.confirmPasswordError != null) {
+                if (uiState.value.confirmPassword.isNotEmpty()) {
                     validateConfirmPassword()
                 }
             }
