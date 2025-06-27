@@ -72,7 +72,7 @@ class UserDaoTest {
             password = "password",
         )
 
-        assertThat(dao.checkIfUsernameIsTaken(username = userToBeAdded.username)).isNotNull()
+        assertThat(dao.checkIfUsernameIsTaken(username = userToBeAdded.username)).isTrue()
     }
 
     @Test
@@ -91,7 +91,7 @@ class UserDaoTest {
             password = "password",
         )
 
-        assertThat(dao.checkIfUsernameIsTaken(username = userToBeAdded.username)).isNull()
+        assertThat(dao.checkIfUsernameIsTaken(username = userToBeAdded.username)).isFalse()
     }
 
     @Test
@@ -110,7 +110,7 @@ class UserDaoTest {
             password = "password",
         )
 
-        assertThat(dao.checkIfEmailIsTaken(email = userToBeAdded.email)).isNotNull()
+        assertThat(dao.checkIfEmailIsTaken(email = userToBeAdded.email)).isTrue()
     }
 
     @Test
@@ -129,6 +129,6 @@ class UserDaoTest {
             password = "password",
         )
 
-        assertThat(dao.checkIfEmailIsTaken(email = userToBeAdded.email)).isNull()
+        assertThat(dao.checkIfEmailIsTaken(email = userToBeAdded.email)).isFalse()
     }
 }
